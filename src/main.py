@@ -8,6 +8,6 @@ def main():
             {"href": "https://www.google.com", "target": "_blank"}
             )
     )
-    print(htmlnode1.props_to_html())
+    print(htmlnode1)
 
 main()
