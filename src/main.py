@@ -1,9 +1,13 @@
 from textnode import *
 from htmlnode import*
-from split_nodes_delimiter import *
+from split_nodes import *
 
 def main():
-    text = "This is text with a [rick roll](https://i.imgur.com/aKaOqIh.gif) and [obi wan](https://i.imgur.com/fJRm4Vk.jpeg)"
-    print(extract_markdown_images(text))
+    node = TextNode(
+    "This is text with an image ![alt text](https://example.com/image.jpg) and another ![second](https://example.com/second.jpg)",
+    text_type_text
+)
+    result = split_nodes_image([node])
+    print(result)
 
 main()
