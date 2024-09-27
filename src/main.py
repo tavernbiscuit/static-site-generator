@@ -1,6 +1,5 @@
-from textnode import *
-from htmlnode import*
-from split_nodes import *
+from textnode import TextNode, text_type_text
+from split_nodes import split_nodes_image
 
 def main():
     node = TextNode(

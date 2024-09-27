@@ -1,6 +1,10 @@
 import unittest
 
-from split_nodes import *
+from textnode import (TextNode, text_type_text, text_type_bold, text_type_code, 
+text_type_italic, text_type_image, text_type_link)
+
+from split_nodes import (
+    split_nodes_delimiter, split_nodes_image, split_nodes_link, text_to_textnodes)
 
 class TestSplitNodesDelimiter(unittest.TestCase):
     def test_code(self):
@@ -194,6 +198,41 @@ class TestSplitNodesImage(unittest.TestCase):
                 "at youtube", text_type_image, "https://www.youtube.com/@bootdotdev"
             ),
         ]      
+        )
+
+class TestTextToTextNodes(unittest.TestCase):
+    def test_simple_text(self):
+        text = "Hello, world!"
+        self.assertEqual(
+            text_to_textnodes(text),
+            [TextNode("Hello, world!", text_type_text)]        
+        )
+
+    def test_bold_text(self):
+        text = "Hello **world**!"
+        self.assertEqual(
+            text_to_textnodes(text),
+            [TextNode("Hello ", text_type_text),
+            TextNode("world", text_type_bold),
+            TextNode("!", text_type_text),]       
+        )
+
+    def test_italic_text(self):
+        text = "Hello *world*!"
+        self.assertEqual(
+            text_to_textnodes(text),
+            [TextNode("Hello ", text_type_text),
+            TextNode("world", text_type_italic),
+            TextNode("!", text_type_text),]       
+        )
+
+    def test_code_text(self):
+        text = "Hello `world`!"
+        self.assertEqual(
+            text_to_textnodes(text),
+            [TextNode("Hello ", text_type_text),
+            TextNode("world", text_type_code),
+            TextNode("!", text_type_text),]       
         )
 
 if __name__ == "__main__":
