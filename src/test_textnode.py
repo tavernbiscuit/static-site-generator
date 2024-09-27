@@ -129,6 +129,75 @@ class TestTextNodeToHTMLNode(unittest.TestCase):
         self.assertEqual(html_node.value, "<>&\"'")
 
 
+class TestMarkdownExtraction(unittest.TestCase):
+    def test_extract_images(self):
+        text = ("This is text with a ![rick roll](https://i.imgur.com/aKaOqIh.gif)" 
+                "and ![obi wan](https://i.imgur.com/fJRm4Vk.jpeg)"
+        )
+        self.assertEqual(
+            extract_markdown_images(text), 
+            [("rick roll", "https://i.imgur.com/aKaOqIh.gif"), 
+             ("obi wan", "https://i.imgur.com/fJRm4Vk.jpeg")]
+            )
+        
+    def test_extract_images_no_exclamation(self):
+        text = ("This is text with a [rick roll](https://i.imgur.com/aKaOqIh.gif)"
+                "and [obi wan](https://i.imgur.com/fJRm4Vk.jpeg)"
+        )
+        self.assertEqual(
+            extract_markdown_images(text), 
+            []
+            )
+        
+    def test_extract_images_no_exclamation2(self):
+        text = ("This is text with a ![rick roll](https://i.imgur.com/aKaOqIh.gif)"
+                "and [obi wan](https://i.imgur.com/fJRm4Vk.jpeg)"
+        )
+        self.assertEqual(
+            extract_markdown_images(text), 
+            [("rick roll", "https://i.imgur.com/aKaOqIh.gif")]
+            )
+        
+    def test_extract_images_double_brackets(self):
+        text = ("This is text with a ![[rick roll]](https://i.imgur.com/aKaOqIh.gif)" 
+                "and ![obi wan](https://i.imgur.com/fJRm4Vk.jpeg)"
+        )
+        self.assertEqual(
+            extract_markdown_images(text), 
+            [("[rick roll]", "https://i.imgur.com/aKaOqIh.gif"), 
+             ("obi wan", "https://i.imgur.com/fJRm4Vk.jpeg")]
+            )
+        
+    def test_extract_link(self):
+        text = (
+            "This is text with a link [to boot dev](https://www.boot.dev)" 
+            "and [to youtube](https://www.youtube.com/@bootdotdev)"
+        )
+        self.assertEqual(
+            extract_markdown_links(text), 
+            [("to boot dev", "https://www.boot.dev"), 
+             ("to youtube", "https://www.youtube.com/@bootdotdev")]
+            )
+        
+    def test_extract_link_incorrect_syntax(self):
+        text = (
+            "This is text with a link to boot dev](https://www.boot.dev)" 
+            "and [to youtube](https://www.youtube.com/@bootdotdev)"
+        )
+        self.assertEqual(
+            extract_markdown_links(text), 
+            [("to youtube", "https://www.youtube.com/@bootdotdev")]
+            )
+        
+    def test_extract_link_incorrect_syntax2(self):
+        text = (
+            "This is text with a link to ![boot dev](https://www.boot.dev)" 
+            "and [to youtubehttps://www.youtube.com/@bootdotdev)"
+        )
+        self.assertEqual(
+            extract_markdown_links(text), 
+            []
+            )
 
 
 if __name__ == "__main__":

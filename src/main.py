@@ -3,8 +3,7 @@ from htmlnode import*
 from split_nodes_delimiter import *
 
 def main():
-    node = TextNode("This is text with a `code block` word", text_type_text)
-    new_nodes = split_nodes_delimiter([node], "`", text_type_code)
-    print(new_nodes)
+    text = "This is text with a [rick roll](https://i.imgur.com/aKaOqIh.gif) and [obi wan](https://i.imgur.com/fJRm4Vk.jpeg)"
+    print(extract_markdown_images(text))
 
 main()

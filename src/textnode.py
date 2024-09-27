@@ -1,4 +1,5 @@
 from htmlnode import *
+import re
 
 text_type_text = "text"
 text_type_bold = "bold"
@@ -23,6 +24,16 @@ def text_node_to_html_node(text_node):
             "", "img", {"src": text_node.url, "alt": text_node.text}
         )
     raise Exception("Invalid TextNode type.")
+
+#Markdown parsing utility functions
+
+def extract_markdown_images(text):
+    matches = re.findall(r"!\[(.*?)\]\((.*?)\)", text)
+    return matches
+
+def extract_markdown_links(text):
+    matches = re.findall(r"(?<!!)\[(.*?)\]\((.*?)\)", text)
+    return matches
 
 class TextNode:
     def __init__(self, text, text_type, url=None):
