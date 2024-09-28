@@ -235,5 +235,33 @@ class TestTextToTextNodes(unittest.TestCase):
             TextNode("!", text_type_text),]       
         )
 
+    def test_link_text(self):
+        text = "Check out [this link](https://example.com)"
+        self.assertEqual(
+            text_to_textnodes(text),
+            [TextNode("Check out ", text_type_text),
+            TextNode("this link", text_type_link, "https://example.com")]
+        )
+
+    def test_image_text(self):
+        text = "Here's an image: ![alt text](https://example.com/image.jpg)"
+        self.assertEqual(
+            text_to_textnodes(text),
+            [TextNode("Here's an image: ", text_type_text),
+            TextNode("alt text", text_type_image, "https://example.com/image.jpg")]       
+        )
+
+    def test_mixed_text(self):
+        text = "This is **bold** and *italic* and `code`"
+        self.assertEqual(
+            text_to_textnodes(text),
+            [TextNode("This is ", text_type_text),
+            TextNode("bold", text_type_bold),
+            TextNode(" and ", text_type_text),
+            TextNode("italic", text_type_italic),
+            TextNode(" and ", text_type_text),
+            TextNode("code", text_type_code)]       
+        )
+
 if __name__ == "__main__":
     unittest.main()

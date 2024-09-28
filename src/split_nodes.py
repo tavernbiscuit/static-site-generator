@@ -32,23 +32,16 @@ def split_nodes_delimiter(old_nodes, delimiter, text_type):
     
     return new_nodes
 
-# Note: This implementation does not support nested formatting within
-# link text or image alt text for simplicity, but does support nested
-# inline formatting such as bold code or bold italics.
+# Note: This implementation does not support nested formatting
 
 def text_to_textnodes(text):
-    def split_recursively(nodes):
-        new_nodes = split_nodes_delimiter(nodes, "`", text_type_code)
-        new_nodes = split_nodes_delimiter(new_nodes, "**", text_type_bold)
-        new_nodes = split_nodes_delimiter(new_nodes, "*", text_type_italic)
-        if new_nodes != nodes:
-            return split_recursively(new_nodes)
-        return new_nodes
-
     nodes = [TextNode(text, text_type_text)]
+    nodes = split_nodes_delimiter(nodes, "**", text_type_bold)
+    nodes = split_nodes_delimiter(nodes, "*", text_type_italic)
+    nodes = split_nodes_delimiter(nodes, "`", text_type_code)
     nodes = split_nodes_image(nodes)
     nodes = split_nodes_link(nodes)
-    return split_recursively(nodes)
+    return nodes
 
 #Markdown parsing utility functions
 

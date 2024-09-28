@@ -1,12 +1,9 @@
 from textnode import TextNode, text_type_text
-from split_nodes import split_nodes_image
+from split_nodes import text_to_textnodes
 
 def main():
-    node = TextNode(
-    "This is text with an image ![alt text](https://example.com/image.jpg) and another ![second](https://example.com/second.jpg)",
-    text_type_text
-)
-    result = split_nodes_image([node])
+    text = "This is **bold** and *italic* text."
+    result = text_to_textnodes(text)
     print(result)
 
 main()
