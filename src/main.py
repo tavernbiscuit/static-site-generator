@@ -1,16 +1,17 @@
-from markdown_to_html import markdown_to_html_node
+import os
+import shutil
+
+from copy_contents import copy_contents
+
+
+static_dir = "./static"
+public_dir = "./public"
+
 
 def main():
-    md = """
-# this is an h1
+    if os.path.exists(public_dir):
+        shutil.rmtree(public_dir)
 
-this is paragraph text
-
-## this is an h2
-"""
-
-    node = markdown_to_html_node(md)
-    html = node.to_html()
-    print(html)
+    copy_contents(static_dir, public_dir)
 
 main()
