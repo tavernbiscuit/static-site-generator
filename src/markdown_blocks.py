@@ -39,8 +39,6 @@ def block_to_block_type(block):
     
     return block_type
 
-
-
 def markdown_to_blocks(markdown):
     blocks = markdown.split("\n\n")
 

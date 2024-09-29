@@ -1,6 +1,7 @@
 import unittest
 from markdown_blocks import markdown_to_blocks, block_to_block_type
 
+
 class TestMarkdownBlocks(unittest.TestCase):
     def test_eq(self):
         text = ("# This is a heading"
@@ -23,7 +24,7 @@ class TestMarkdownBlocks(unittest.TestCase):
     def test_eq2(self):
         text = ("# This is a heading"
             "\n\n"
-            "This is a paragraph of text. It has some **bold** "
+            "This is a paragraph of text. It has some **bold** \n"
             "and *italic* words inside of it."
             "\n\n"
             "* This is the first list item in a list block"
@@ -33,7 +34,7 @@ class TestMarkdownBlocks(unittest.TestCase):
         self.assertEqual(
             markdown_to_blocks(text),
             ['# This is a heading', 
-             'This is a paragraph of text. It has some **bold** '
+             'This is a paragraph of text. It has some **bold** \n'
              'and *italic* words inside of it.', 
              '* This is the first list item in a list block',
              '* This is a list item\n* This is another list item']
